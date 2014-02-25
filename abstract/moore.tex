@@ -1,21 +1,15 @@
 \documentclass{dw2014}
-% use the three commands starting with mathptmx instead of
-%\usepackage{times}
-% when you need math in your abstract
+
 \usepackage{mathptmx}
-\usepackage{helvet}%[scaled=0.92]{helvet}
+\usepackage{helvet}
 \usepackage{courier}
-% but you could better use mathtime, if you have the (commercial) math fonts
-%\usepackage{mathtime}
-\usepackage{graphicx}        % standard LaTeX graphics tool
+\usepackage{graphicx}
 
 \title{Identification of human control during perturbed walking}
-\author{
-  Jason K. Moore, Sandra K. Hnat, Antonie J. van den Bogert\\
+
+\author{Jason K. Moore, Sandra K. Hnat, Antonie J. van den Bogert\\
   Human Motion and Control Laboratory, Cleveland State University, Cleveland, Ohio, USA\\
-  {\it j.k.moore19@csuohio.edu, s.hnat@vikes.csuohio.edu,
-  a.vandenbogert@csuohio.edu}
-}
+  {\it j.k.moore19@csuohio.edu, s.hnat@vikes.csuohio.edu, a.vandenbogert@csuohio.edu}}
 
 \date{}
 
@@ -25,29 +19,28 @@
 
 \section*{Introduction}
 %
-Recent research and commercial activity have shown that gait-related, powered
+Recent research and commercial activity have shown that gait-related powered
 prosthetics will play an important role in assisting humans with disabilities.
-These devices include a variety of sensors and actuators than can be coupled by
-a control system to provide gait assistance. However, the available
+These devices include a variety of sensors and actuators than can be coupled to
+a control system to provide acutated gait assistance. However, the available
 lightweight, lower extremity exoskeletons lack gait that resembles an
 able-bodied human. To improve the gait of powered prosthetics, our intent is to
 identify a simple, linear controller from a large set of data collected from
-able-bodied subjects being perturbed by random longitudinal and/or lateral
-forces.
+able-bodied subjects being perturbed by random longitudinal forces.
 %
 \section*{Methods}
-The example data shown here was collected from a single subject (age: 25, mass:
-101 kg, height: 187 cm) walking on an instrumented treadmill (V-Gait, Motek
+The example data shown here was collected from a single subject (age: 29, mass:
+63 kg, height: 172 cm) walking on an instrumented treadmill (V-Gait, Motek
 Medical). The subject was longitudinally perturbed using random white noise
-with 5\% std around a nominal 1.2 m/s belt speed. Data was recorded for 4
-minutes at 100 Hz, which included approximately 200 steps of walking.  Ankle
+with 10\% std around a nominal 1.2 m/s belt speed. Data was recorded for 8
+minutes at 100 Hz, which included approximately 500 steps of walking. Ankle
 plantarflexion, knee flexion, and hip flexion angles, rates, and moments were
 computed using 2D inverse dynamics.
 %
 \begin{figure}[hbt]
   \begin{center}
     \includegraphics[width=\columnwidth]{fig/gains.pdf}
-    \caption{Scheduled gains for right (blue) and left (red) legs.}
+    \caption{Gait phase percent scheduled gains for right (blue) and left (red) legs.}
     \label{fig:gains}
   \end{center}
 \end{figure}
@@ -65,7 +58,7 @@ given the joint angles and rates that fits the following form.
 %
 where $t$ is an instance of time, $\varphi(t)$ is the phase in the right leg
 gait cycle, $\mathbf{m}(t)$ is a vector of joint torques,
-$\mathbf{m}^*(\varphi(t))$ is a vector of the reference joint torques,
+$\mathbf{m}^*(\varphi(t))$ is a vector of the nominal joint torques,
 $\mathbf{K}(\varphi(t))$ is a gain matrix scheduled with respect to gait
 phase which multiplies the vector of joint angles and rates, $\mathbf{s}(t)$.
 This equation is linear in the gains and the reference torques. Given
@@ -93,11 +86,13 @@ by the identified control model.
 %
 We are able to identify a simple linear controller that exhibits larger gains
 in the stance phase than in the swing phase. Additionally, similar gain
-patterns in the right and left legs are observed. The controller is capable of
-predicting the measured joint torques with greater than 60\% VAF in all joints.
+patterns in the right and left legs are observed that use both positive and
+negative feedback. The controller is capable of predicting the measured joint
+torques with greater than 65\% VAF in all joints. Results and conclusions from
+a larger sample of subjects and conditions will be presented at the conference.
 
-\section*{Acknowledgments}
-
-This research was funded by the Ohio's Wright Center for Sensor Systems
-Engineering and the Parker Hannifin Corporation.
+%\section*{Acknowledgments}
+%
+%This research was funded by the Ohio's Wright Center for Sensor Systems
+%Engineering and the Parker Hannifin Corporation.
 \end{document}

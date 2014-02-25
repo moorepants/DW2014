@@ -7,9 +7,9 @@ from gaitanalysis import motek, gait
 # Figshare once I post the data.
 root_data_directory = "/home/moorepants/Data/human-gait/gait-control-identification"
 
-mocap_file_path = join(root_data_directory, 'T009', 'mocap-009.txt')
-record_file_path = join(root_data_directory, 'T009', 'record-009.txt')
-meta_file_path = join(root_data_directory, 'T009', 'meta-009.yml')
+mocap_file_path = join(root_data_directory, 'T018', 'mocap-018.txt')
+record_file_path = join(root_data_directory, 'T018', 'record-018.txt')
+meta_file_path = join(root_data_directory, 'T018', 'meta-018.yml')
 
 dflow_data = motek.DFlowData(mocap_file_path, record_file_path,
                              meta_file_path)
@@ -47,9 +47,8 @@ new_inv_dyn_labels = add_negative_columns(perturbation_data_frame)
 
 perturbation_data = gait.WalkingData(perturbation_data_frame)
 
-#args = new_inv_dyn_labels + [dflow_data.meta['subject']['mass'],
-                             #inv_dyn_low_pass_cutoff]
-args = new_inv_dyn_labels + [79.0, inv_dyn_low_pass_cutoff]
+args = new_inv_dyn_labels + [dflow_data.meta['subject']['mass'],
+                             inv_dyn_low_pass_cutoff]
 
 perturbation_data.inverse_dynamics_2d(*args)
 
@@ -58,9 +57,18 @@ perturbation_data.inverse_dynamics_2d(*args)
 perturbation_data.grf_landmarks('FP2.ForY', 'FP1.ForY',
                                 filter_frequency=15.0,
                                 num_steps_to_plot=None, do_plot=False,
-                                threshold=30.0, min_time=290.0)
+                                threshold=35.0)
 
 perturbation_data.split_at('right', num_samples=20,
                            belt_speed_column='RightBeltSpeed')
+
+# Remove bad steps.
+
+num_samples_lower_bound = 53
+num_samples_upper_bound = 132
+
+lower_values = perturbation_data.step_data[perturbation_data.step_data['Number of Samples'] < num_samples_upper_bound]
+mid_values = lower_values[num_samples_lower_bound < lower_values['Number of Samples']]
+perturbation_data.steps = perturbation_data.steps.iloc[mid_values.index]
 
 perturbation_data.save(join(split(__file__)[0], '../data/perturbation.h5'))

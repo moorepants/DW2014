@@ -1,10 +1,9 @@
 clean data:
     help: Cleanses the raw data.
-    # dependencies should probably inclue the raw data files stored elsewhere
     dependencies:
-        - /home/moorepants/Data/human-gait/gait-control-identification/T006/mocap-006.txt
-        - /home/moorepants/Data/human-gait/gait-control-identification/T006/record-006.txt
-        - /home/moorepants/Data/human-gait/gait-control-identification/T006/meta-006.yml
+        - /home/moorepants/Data/human-gait/gait-control-identification/T018/mocap-018.txt
+        - /home/moorepants/Data/human-gait/gait-control-identification/T018/record-018.txt
+        - /home/moorepants/Data/human-gait/gait-control-identification/T018/meta-018.yml
         - src/clean_data.py
     formula: python src/clean_data.py;
     output:
